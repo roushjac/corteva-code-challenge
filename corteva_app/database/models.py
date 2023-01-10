@@ -1,5 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
+from corteva_app.app import db
 
-# create Flask's SQLAlchemy extension object
-db = SQLAlchemy()
+# We will subclass db.Model to create our individual data models
 
+class Weather(db.Model):
+    pass
+
+class Yield(db.Model):
+    pass
+
+class WeatherStats(db.Model):
+    pass
