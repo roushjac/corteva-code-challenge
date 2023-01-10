@@ -3,7 +3,7 @@ import sqlalchemy as sa
 
 
 # We will subclass db.Model to create our individual data models. SQLAlchemy will use these models to create tables.
-# However we will use SQLAlchemy directly for datatypes, since the db object does not properly namespace types.
+# However we will use SQLAlchemy directly for datatypes, since the db object does not properly namespace types and I love my VSCode autocompletes.
 
 class Weather(db.Model):
     # using a denormalized pattern for weather, meaning each station will have many measurements and will be repeated in this table
