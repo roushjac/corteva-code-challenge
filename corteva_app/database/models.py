@@ -7,7 +7,7 @@ import sqlalchemy as sa
 
 class Weather(db.Model):
     # using a denormalized pattern for weather, meaning each station will have many measurements and will be repeated in this table
-    id = db.Columns(sa.INT, primary_key=True, nullable=False)
+    id = db.Column(sa.INT, primary_key=True, nullable=False)
     station_id = db.Column(sa.TEXT, nullable=False)
     date = db.Column(sa.DATE, nullable=False)
     max_temp = db.Column(sa.FLOAT, nullable=False)
