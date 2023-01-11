@@ -7,24 +7,28 @@ import sqlalchemy as sa
 
 class Weather(db.Model):
     # using a denormalized pattern for weather, meaning each station will have many measurements and will be repeated in this table
-    id = db.Column(sa.INT, primary_key=True, nullable=False)
-    station_id = db.Column(sa.TEXT, nullable=False)
-    date = db.Column(sa.DATE, nullable=False)
+    # use station_id/date combo for primary key for easy de-duping
+    station_id = db.Column(sa.TEXT, primary_key=True, nullable=False)
+    date = db.Column(sa.DATE, primary_key=True, nullable=False)
+    __table_args__ = (
+        sa.PrimaryKeyConstraint(station_id, date),
+        {},
+    )
     max_temp = db.Column(sa.FLOAT, nullable=False)
     min_temp = db.Column(sa.FLOAT, nullable=False)
     precip = db.Column(sa.FLOAT, nullable=False)
 
 class Yield(db.Model):
-    # use year as primary key because it will be unique in this table. No need for an integer ID
+    # use year as primary key because it will be unique in this table
     year = db.Column(sa.INT, primary_key=True, nullable=False)
     total_grain_yield = db.Column(sa.INT, nullable=False)
 
 class WeatherStats(db.Model):
-    year = db.Column(sa.INT, primary_key=True, nullable=False)
     station_id = db.Column(sa.TEXT, primary_key=True, nullable=False)
-    # the combo of year/station_id will be unique, so we can use a multi-column primary key
+    year = db.Column(sa.INT, primary_key=True, nullable=False)
+    # the combo of station_id/year will be unique, use as primary key for easy de-duping
     __table_args__ = (
-        sa.PrimaryKeyConstraint(year, station_id),
+        sa.PrimaryKeyConstraint(station_id, year),
         {},
     )
     avg_max_temp = db.Column(sa.FLOAT, nullable=False)
