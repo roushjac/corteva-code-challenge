@@ -14,14 +14,14 @@ class Weather(db.Model):
         sa.PrimaryKeyConstraint(station_id, date),
         {},
     )
-    max_temp = db.Column(sa.FLOAT, nullable=False)
-    min_temp = db.Column(sa.FLOAT, nullable=False)
-    precip = db.Column(sa.FLOAT, nullable=False)
+    max_temp = db.Column(sa.FLOAT, nullable=False, comment="maximum temperature in degrees C")
+    min_temp = db.Column(sa.FLOAT, nullable=False, comment="minimum temperature in degrees C")
+    precip = db.Column(sa.FLOAT, nullable=False, comment="precipitation in centimeters")
 
 class Yield(db.Model):
     # use year as primary key because it will be unique in this table
     year = db.Column(sa.INT, primary_key=True, nullable=False)
-    total_grain_yield = db.Column(sa.INT, nullable=False)
+    total_grain_yield = db.Column(sa.INT, nullable=False, comment="total harvested corn grain yield in 1000s of megatons")
 
 class WeatherStats(db.Model):
     station_id = db.Column(sa.TEXT, primary_key=True, nullable=False)
@@ -31,6 +31,6 @@ class WeatherStats(db.Model):
         sa.PrimaryKeyConstraint(station_id, year),
         {},
     )
-    avg_max_temp = db.Column(sa.FLOAT, nullable=False)
-    avg_min_temp = db.Column(sa.FLOAT, nullable=False)
-    total_precip = db.Column(sa.FLOAT, nullable=False)
+    avg_max_temp = db.Column(sa.FLOAT, nullable=False, comment="average maximum temperature in degrees C")
+    avg_min_temp = db.Column(sa.FLOAT, nullable=False, comment="average minimum temperature in degrees C")
+    total_precip = db.Column(sa.FLOAT, nullable=False, comment="total accumulated precipitation in centimeters")

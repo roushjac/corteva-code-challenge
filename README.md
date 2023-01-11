@@ -7,8 +7,6 @@ These instructions assume you are using a Linux based distro such as Ubuntu, how
 Run the following command to create a virtual environment. Virtual environments are essential for package and dependency management on local and cloud systems.
 `python3 -m venv .venv`
 
-Run these commands to activate the virtual environment and install the packages needed to create and manage the database. It will also install Flask which we will use to deliver data through a REST API.
-
 ```
 source .venv/bin/activate
 pip install -r requirements.txt
