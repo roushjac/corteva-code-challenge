@@ -20,7 +20,7 @@ class Weather(db.Model):
 
 class Yield(db.Model):
     # use year as primary key because it will be unique in this table
-    year = db.Column(sa.INT, primary_key=True, nullable=False)
+    year = db.Column(sa.DATE, primary_key=True, nullable=False)
     total_grain_yield = db.Column(sa.INT, nullable=False, comment="total harvested corn grain yield in 1000s of megatons")
 
 class WeatherStats(db.Model):
