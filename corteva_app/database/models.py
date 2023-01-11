@@ -14,9 +14,9 @@ class Weather(db.Model):
         sa.PrimaryKeyConstraint(station_id, date),
         {},
     )
-    max_temp = db.Column(sa.FLOAT, nullable=False, comment="maximum temperature in degrees C")
-    min_temp = db.Column(sa.FLOAT, nullable=False, comment="minimum temperature in degrees C")
-    precip = db.Column(sa.FLOAT, nullable=False, comment="precipitation in centimeters")
+    max_temp = db.Column(sa.FLOAT, nullable=True, comment="maximum temperature in degrees C")
+    min_temp = db.Column(sa.FLOAT, nullable=True, comment="minimum temperature in degrees C")
+    precip = db.Column(sa.FLOAT, nullable=True, comment="precipitation in centimeters")
 
 class Yield(db.Model):
     # use year as primary key because it will be unique in this table
@@ -31,6 +31,6 @@ class WeatherStats(db.Model):
         sa.PrimaryKeyConstraint(station_id, year),
         {},
     )
-    avg_max_temp = db.Column(sa.FLOAT, nullable=False, comment="average maximum temperature in degrees C")
-    avg_min_temp = db.Column(sa.FLOAT, nullable=False, comment="average minimum temperature in degrees C")
-    total_precip = db.Column(sa.FLOAT, nullable=False, comment="total accumulated precipitation in centimeters")
+    avg_max_temp = db.Column(sa.FLOAT, nullable=True, comment="average maximum temperature in degrees C")
+    avg_min_temp = db.Column(sa.FLOAT, nullable=True, comment="average minimum temperature in degrees C")
+    total_precip = db.Column(sa.FLOAT, nullable=True, comment="total accumulated precipitation in centimeters")

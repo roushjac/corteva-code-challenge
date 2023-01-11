@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import os
 from typing import List
 from sqlalchemy import create_engine
@@ -35,6 +36,12 @@ def ingest_weather(dir_path: str) -> None:
         dfs.append(df_weather_one_station)
 
     df_weather = pd.concat(dfs)
+
+    # Clean the data before inserting into database
+    # We know that values of -9999 are actually missing data. Replace them with NaNs which will be turned into NULLs in Postgres
+
+    df_weather.replace({-9999: np.nan}, inplace=True)
+
     # transform temps into degrees C and precip into centimeters following our data model
     df_weather["max_temp_c"] = df_weather["max_temp_tenth_c"] / 10
     df_weather["min_temp_c"] = df_weather["min_temp_tenth_c"] / 10
@@ -83,7 +90,8 @@ def write_to_postgres(df: pd.DataFrame, table_name: str, table_model: db.Model) 
         df.to_sql(name=table_name, con=engine, if_exists="append", index=False)
         num_rows = db_session.query(table_model).count()
         print(f"Inserted {num_rows} rows")
-    except IntegrityError:
+    except IntegrityError as e:
+        print("\n", e, "\n")
         print(f"Duplicate rows detected in {table_name} table - stopping ingestion")
         print(f"Inserted 0 rows into {table_name} table")
     finally:
