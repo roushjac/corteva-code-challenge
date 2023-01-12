@@ -22,16 +22,33 @@ def get_weather():
 
     if None not in (station_id, date):
         # both paremeters are specified
-        pass
+        result: List[Weather] = db.session.execute(db.select(Weather).filter_by(station_id=station_id, date=date)).scalars().fetchall()
     elif station_id:
-        pass
+        result: List[Weather] = db.session.execute(db.select(Weather).filter_by(station_id=station_id)).scalars().fetchall()
     elif date:
-        pass
+        result: List[Weather] = db.session.execute(db.select(Weather).filter_by(date=date)).scalars().fetchall()
     else:
         # return empty result if nothing is specified - too much data to return everything
-        result = {}
+        response = {
+            "status": 200,
+            "message": "Must specify either a date, station, or both",
+            "data": []
+        }
+        return jsonify(response)
 
-    return result
+    response = {
+        "status": 200,
+        "message": "Success",
+        "data": [{
+            "station_id": q.station_id,
+            "date": q.date,
+            "max_temp": q.max_temp,
+            "min_temp": q.min_temp,
+            "precip": q.precip
+         } for q in result]
+    }
+
+    return jsonify(response)
 
 # allow user to specify year
 @app.route("/api/yield", methods=["GET"])
@@ -48,6 +65,7 @@ def get_yield():
 
     response = {
         "status": 200,
+        "message": "Success",
         "data": [{
             "year": q.year,
             "total_grain_yield": q.total_grain_yield
@@ -64,13 +82,25 @@ def get_weather_stats():
     year: int = args.get("year", type=int)
     
     if None not in (station_id, year):
-        pass
+        result: List[WeatherStats] = db.session.execute(db.select(WeatherStats).filter_by(station_id=station_id, year=year)).scalars().fetchall()
     elif station_id:
-        pass
+        result: List[WeatherStats] = db.session.execute(db.select(WeatherStats).filter_by(station_id=station_id)).scalars().fetchall()
     elif year:
-        pass
+        result: List[WeatherStats] = db.session.execute(db.select(WeatherStats).filter_by(year=year)).scalars().fetchall()
     else:
         # return everything from the table
-        result = {}
+        result: List[WeatherStats] = db.session.execute(db.select(WeatherStats)).scalars().fetchall()
 
-    return result
+    response = {
+        "status": 200,
+        "message": "Success",
+        "data": [{
+            "station_id": q.station_id,
+            "year": q.year,
+            "avg_max_temp": q.avg_max_temp,
+            "avg_min_temp": q.avg_min_temp,
+            "total_precip": q.total_precip
+        } for q in result]
+    }
+
+    return jsonify(response)
