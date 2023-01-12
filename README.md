@@ -47,7 +47,7 @@ To confirm that we have set this up correctly:
 
 ## Step 2 - Ingest data
 
-This one is made simple with the help of a utility script. It will populate the weather and yield tables using the provided flat files and SQLAlchemy data models defined in our app.
+This one is made simple for the user with the help of a utility script. It will populate the weather and yield tables using the provided flat files and SQLAlchemy data models defined in our app.
 
 ```
 cd utils
