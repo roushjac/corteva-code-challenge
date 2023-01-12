@@ -61,3 +61,27 @@ We can view the data using a database viewing program such as DBeaver or PGAdmin
 In the `utils` directory we can run `python calculate_stats.py` to execute a SQL statement that will run the analysis and populate the `weather_stats` table.
 This executes raw SQL and does not use the ORM features of SQLAlchemy. The query is just too complex to justify writing it in ORM form.
 
+## Step 4 - Deliver data through Flask REST API
+
+Navigate to the directory containing the Flask app.
+
+`cd corteva_app`
+
+You must be in the `corteva-code-challenge/corteva_app` directory to run the app.
+
+Run this command to bring the API online:
+
+`flask run`
+
+At this point, all tables have been created according to our models, data has been ingested, and a local server is able to deliver this data. Open up a new shell and run these example commands one at a time to confirm everything is working as expected.
+
+```
+curl "localhost:5000/api/weather/stats?station_id=USC00110072"
+curl "localhost:5000/api/weather/stats?year=2000&station_id=USC00110072"
+
+curl "localhost:5000/api/weather?date=1985-01-01"
+curl "localhost:5000/api/weather?station_id=USC00137161"
+
+curl "localhost:5000/api/yield"
+curl "localhost:5000/api/yield?year=2013"
+```
