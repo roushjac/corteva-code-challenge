@@ -101,6 +101,7 @@ def write_to_postgres(df: pd.DataFrame, table_name: str, table_model: db.Model) 
         print(f"There are currently {num_rows} rows in the {table_name} table\n")
 
 
+# use this to protect the functions from being actually executed if we were to import functions from this script instead of running it directly
 if __name__ == "__main__":
     ingest_weather("../wx_data")
     ingest_yield("../yld_data")

@@ -44,3 +44,14 @@ To confirm that we have set this up correctly:
 2. `\c corteva-db` to connect to the proper database
 3. `\dt` should list 3 tables
 
+## Step 2 - Ingest data
+
+This one is made simple with the help of a utility script. It will populate the weather and yield tables using the provided flat files and SQLAlchemy data models defined in our app.
+
+```
+cd utils
+python ingest_data.py
+```
+
+We can view the data using a database viewing program such as DBeaver or PGAdmin, or directly from the psql command line.
+
