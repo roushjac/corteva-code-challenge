@@ -1,4 +1,4 @@
-from corteva_app.app import db
+from corteva_app.database.mgmt import db
 import sqlalchemy as sa
 
 

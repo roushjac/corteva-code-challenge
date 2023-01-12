@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from flask_sqlalchemy import SQLAlchemy
+
+# create Flask's SQLAlchemy extension object
+db = SQLAlchemy()
 
 conn_string = "postgresql://postgres:password@localhost:5432/corteva-db"
 

@@ -1,9 +1,8 @@
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
-from corteva_app.database.mgmt import db_session, conn_string
+from typing import List
 
-# create Flask's SQLAlchemy extension object
-db = SQLAlchemy()
+from flask import Flask, request, jsonify
+from corteva_app.database.mgmt import conn_string, db
+from corteva_app.database.models import Weather, Yield, WeatherStats
 
 # initialize the main Flask object with the special dunder variable __name__
 # we will use this to define API routes and set app configs
@@ -13,10 +12,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = conn_string
 # initialize the app with the extension
 db.init_app(app)
 
-# this should close open database connections when requests complete or the app shuts down
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
 
 # allow user to specify station id and date
 @app.route("/api/weather", methods=["GET"])
@@ -45,15 +40,24 @@ def get_yield():
     year: int = args.get("year", type=int)
     
     if year:
-        pass
+        # get result as a list even though it's a single result. makes it easier to construct result
+        result: List[Yield] = db.session.execute(db.select(Yield).filter_by(year=year)).scalars().fetchall()
     else:
         # return everything from the table
-        result = {}
+        result: List[Yield] = db.session.execute(db.select(Yield)).scalars().fetchall()
 
-    return result
+    response = {
+        "status": 200,
+        "data": [{
+            "year": q.year,
+            "total_grain_yield": q.total_grain_yield
+        } for q in result]
+    }
+
+    return jsonify(response)
 
 # allow user to specify station id and year
-@app.route("api/weather/stats", methods=["GET"])
+@app.route("/api/weather/stats", methods=["GET"])
 def get_weather_stats():
     args = request.args
     station_id: str = args.get("station_id", type=str)
