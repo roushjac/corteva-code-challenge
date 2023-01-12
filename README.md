@@ -61,6 +61,10 @@ We can view the data using a database viewing program such as DBeaver or PGAdmin
 In the `utils` directory we can run `python calculate_stats.py` to execute a SQL statement that will run the analysis and populate the `weather_stats` table.
 This executes raw SQL and does not use the ORM features of SQLAlchemy. The query is just too complex to justify writing it in ORM form.
 
+Since we are aggregating at the year level, we cannot include records from the `weather` table that do not have continuous data. Including this incomplete data would skew our summary statistics and could lead us to incorrect conclusions.
+
+If we wanted to include more data, we could set a criteria for how many missing days we are willing to accept. In this analysis I did not accept years missing 1 or more days of data. We could also aggregate at the seasonal or month level if we are interested in exploring seasonal trends.
+
 ## Step 4 - Deliver data through Flask REST API
 
 Navigate to the directory containing the Flask app.
