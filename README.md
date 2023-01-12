@@ -47,17 +47,17 @@ To confirm that we have set this up correctly:
 1. `sudo -u postgres psql` to activate the postgres service
 2. `\c corteva-db` to connect to the proper database
 3. `\dt` should list 3 tables
+4. `\q` to quit out of the postgres command line
 
 ## Step 2 - Ingest data
 
 This one is made simple for the user with the help of a utility script. It will populate the weather and yield tables using the provided flat files and SQLAlchemy data models defined in our app.
 
-```
-cd utils
-python ingest_data.py
-```
+`cd utils` if not already in the `corteva-code-challenge/utils` directory.
 
-We can view the data using a database viewing program such as DBeaver or PGAdmin, or directly from the psql command line.
+`python ingest_data.py`
+
+We can view the data using a database viewer program such as DBeaver or PGAdmin, or directly from the psql command line.
 
 ## Step 3 - Analysis
 
