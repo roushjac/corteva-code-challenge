@@ -37,7 +37,10 @@ Now we can create the database and use SQLAlchemy to create the tables using our
 
 Finally, we can run a small Python program to populate the database with tables following our data models.
 
-`python create_db_tables.py`
+```
+cd utils
+python create_db_tables.py
+```
 
 To confirm that we have set this up correctly:
 
