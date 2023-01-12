@@ -55,3 +55,8 @@ python ingest_data.py
 
 We can view the data using a database viewing program such as DBeaver or PGAdmin, or directly from the psql command line.
 
+## Step 3 - Analysis
+
+In the `utils` directory we can run `python calculate_stats.py` to execute a SQL statement that will run the analysis and populate the `weather_stats` table.
+This executes raw SQL and does not use the ORM features of SQLAlchemy. The query is just too complex to justify writing it in ORM form.
+
